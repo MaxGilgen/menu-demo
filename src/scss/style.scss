@@ -1,1 +1,85 @@
-@import "preset";
+@import 'preset';
+
+$size: 3rem;
+$max: 5;
+
+.size {
+    width: $size;
+    height: $size;
+    border-radius: $size;
+}
+
+.animation {
+    transition: all 600ms ease-in-out;
+}
+
+.radial {
+    display: grid;
+    place-items: center;
+    position: relative;
+    filter: url("#goo");
+    @extend .size;
+    &:hover {
+        .radial-background {
+            scale: 4;
+        }
+        .radial-button {
+            @for $i from 1 through $max {
+                &-#{$i} {
+                    offset-distance: $i * (70% / $max);
+                    transition-delay: $i * 50ms;
+                    img {
+                        transition-delay: $i * 50ms;
+                        opacity: 1;
+                        scale: 0.8;
+                    }
+                }
+            }
+        }
+    }
+    .radial-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        @extend .size;
+    }
+    button {
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        background-color: $secondary;
+        @extend .size;
+        img {
+            width: $size * 0.17;
+            width: $size * 0.17;
+            padding-left: $size * 0.01;
+        }
+    }
+    .radial-button-center {
+        position: relative;
+        z-index: 3;
+    }
+    .radial-button {
+        position: absolute;
+        top: -$size * 0.9;
+        left: -$size * 0.9;
+        offset-distance: 100%;
+        z-index: 2;
+        offset-rotate: 0deg;
+        @extend .animation;
+        offset-path: path(
+            "M.5,68.132a67.221,67.221,0,1,0,16.742-44.8C2.066,40.57,14.764,67.722,37.734,67.722H67.721"
+        );
+        img {
+            width: $size * 0.5;
+            width: $size * 0.5;
+            opacity: 0;
+            scale: 0;
+            @extend .animation;
+        }
+    }
+}
